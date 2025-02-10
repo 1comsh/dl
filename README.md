@@ -2,8 +2,8 @@ Armbian AMD64 Downloads : https://dl.armbian.com/uefi-x86/
 
 =======================================================================================
 Flash img :
- Find Target Drive : lsblk
- Use DD Command for X = target drive :
+- Find Target Drive : lsblk
+- Use DD Command for X = target drive :
 
 sudo xzcat file.img.xz | sudo dd of=/dev/sdX status=progress bs=2M conv=fsync
 
