@@ -17,11 +17,13 @@ Decompress 7Zip : 7z x xxx.img.xz
 # Install Grub bootloader :
 # lsblk = /dev/sdX  >  mount = /mnt/sdX
 
-#Grub-Install gonna Create "/efi/grub" Files > /efi/grub/grub.cfg
+#Grub-Install gonna Create "/efi/grub" Files > /efi/grub/grub.cfg :
+
 sudo grub-install --target=i386-pc /dev/sdX --boot-directory=/mnt/sdX2/efi --removable
 
 
-#Grub-Install gonna Create "/efi/boot/bootx64.efi" File > /efi/boot/grub.cfg
+#Grub-Install gonna Create "/efi/boot/bootx64.efi" File > /efi/boot/grub.cfg :
+
 sudo grub-install --target=x86_64-efi --efi-directory=/mnt/sdX2 --boot-directory=/mnt/sdX2/efi --removable
 
 =======================================================================================
