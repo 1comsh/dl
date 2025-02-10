@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Icon=system-file-manager
+Name=Nemo Files
+Categories=FileTools;FileManager;Utility;Core;GTK;
+Exec=nemo %U
+StartupNotify=true
+Terminal=false
+MimeType=inode/directory;

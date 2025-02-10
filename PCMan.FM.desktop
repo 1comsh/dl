@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Icon=system-file-manager
+Name=PCManFM Files
+Categories=FileTools;FileManager;Utility;Core;GTK;
+Exec=pcmanfm %U
+StartupNotify=true
+Terminal=false
+MimeType=inode/directory;

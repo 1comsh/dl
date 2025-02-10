@@ -1,0 +1,8 @@
+# Sources file built for nala
+
+deb https://mirror.kku.ac.th/ubuntu/ noble main restricted universe multiverse
+
+deb https://mirror.twds.com.tw/ubuntu/ noble main restricted universe multiverse
+
+deb https://repo.huaweicloud.com/ubuntu/ noble main restricted universe multiverse
+

@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Icon=system-file-manager
+Name=Thunar Files
+Categories=FileTools;FileManager;Utility;Core;GTK;
+Exec=thunar %U
+StartupNotify=true
+Terminal=false
+MimeType=inode/directory;

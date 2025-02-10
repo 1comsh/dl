@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=CopyMastro
+Comment= CopyMastro is a powerful modern copy accelerator and organizer
+Keywords=copy;manager;free;fm;
+Exec=/opt/copymastro/CopyMastro
+Terminal=false
+Type=Application
+Icon=/opt/copymastro/CopyMastro.png
+Categories=FileTools;FileManager;Utility;Core;FileTransfer;P2P;GTK;
+StartupNotify=true

@@ -1,0 +1,9 @@
+# Sources file built for nala
+
+deb https://mirror.kku.ac.th/debian/ trixie main
+
+deb http://debian-archive.trafficmanager.net/debian/ trixie main
+
+deb https://mirror.sg.gs/debian/ trixie main
+
+deb https://mirror.twds.com.tw/debian/ trixie main

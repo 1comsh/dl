@@ -1,0 +1,7 @@
+# Sources file built for nala
+
+deb https://mirror.kku.ac.th/ubuntu/ jammy main restricted universe multiverse
+
+deb https://mirror.twds.com.tw/ubuntu/ jammy main restricted universe multiverse
+
+deb https://repo.huaweicloud.com/ubuntu/ jammy main restricted universe multiverse
