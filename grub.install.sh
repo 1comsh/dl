@@ -23,52 +23,62 @@ sudo parted -s $disk print
 # Ask the user to select a partition for the EFI (e.g., /dev/sda2)
 read -p "Enter the partition number for the EFI partition (e.g., 2 for $disk): " efinput
 
-# Ask the user to select a partition for the Linux system (e.g., /dev/sda3)
-read -p "Enter the partition number for the Linux system partition (e.g., 3 for $disk): " linput
-
-# Build partition paths based on the user input
+# Build partition path based on the user input
 efinput="/dev/${disk##*/}$efinput"
-linput="/dev/${disk##*/}$linput"
 
-# Verify that the selected partitions exist
+# Verify that the selected EFI partition exists
 if [ ! -e "$efinput" ]; then
     echo "Error: Partition $efinput does not exist."
     exit 1
 fi
 
-if [ ! -e "$linput" ]; then
-    echo "Error: Partition $linput does not exist."
-    exit 1
-fi
+# Set Boot on Partition for UEFI-based systems (x86_64-efi)
+sudo parted -s "$disk" set "${efinput##*/}" boot on
+sudo parted -s "$disk" set "${efinput##*/}" esp on
 
-# Create mount points dynamically based on user input
-echo "Mounting partitions..."
+# Function to check if a partition is already mounted
+check_and_mount_efi() {
+    local partition=$1
+    local mount_point=$2
 
-# Create mount point directories based on the partition numbers input by the user
-sudo mkdir -p /mnt/${disk##*/}${efinput##*/}  # e.g., /mnt/sda2 (EFI partition)
-sudo mkdir -p /mnt/${disk##*/}${linput##*/}  # e.g., /mnt/sda3 (EXT4 partition for Linux)
+    if mount | grep -q "$partition"; then
+        # If mounted, show where it's mounted
+        current_mount=$(mount | grep "$partition" | awk '{print $3}')
+        echo "The partition $partition is already mounted at $current_mount."
+        
+        # Ask the user if they want to keep this or change the mount point
+        read -p "Do you want to continue using this mount point or change it? (keep/change): " user_choice
+        if [ "$user_choice" == "change" ]; then
+            # Prompt the user to specify a new mount point
+            read -p "Enter the new mount path for $partition (e.g., sdb2): " new_mount_point
+            mount_point="/mnt/$new_mount_point"
+            echo "Mounting the partition $partition to $mount_point"
+            sudo mount "$partition" "$mount_point"
+        else
+            echo "Using the existing mount point $current_mount."
+        fi
+    else
+        # If not mounted, create the mount point and mount it
+        echo "Partition $partition is not mounted."
+        read -p "Enter the mount path for $partition (e.g., sdb2): " mount_point
+        mount_point="/mnt/$mount_point"  # Ensure mount point starts with /mnt/
+        sudo mkdir -p "$mount_point"
+        echo "Mounting $partition to $mount_point"
+        sudo mount "$partition" "$mount_point"
+    fi
+}
 
-# Mount the EFI partition to the appropriate mount point
-echo "Mounting the EFI partition to /mnt/${disk##*/}${efinput##*/}"
-sudo mount "$efinput" /mnt/${disk##*/}${efinput##*/}
-
-# Mount the EXT4 partition for Linux to the appropriate mount point
-echo "Mounting the EXT4 partition for Linux to /mnt/${disk##*/}${linput##*/}"
-sudo mount "$linput" /mnt/${disk##*/}${linput##*/}
-
-# Install GRUB for BIOS-based systems (i386-pc)
-echo "Installing GRUB for BIOS (i386-pc)..."
-sudo grub-install --target=i386-pc "$disk" --boot-directory=/mnt/${disk##*/}${efinput##*/}/efi --removable
+# Check and mount the EFI partition
+check_and_mount_efi "$efinput" "$efinput"
 
 # Install GRUB for UEFI-based systems (x86_64-efi)
 echo "Installing GRUB for UEFI (x86_64-efi)..."
-sudo grub-install --target=x86_64-efi --efi-directory=/mnt/${disk##*/}${efinput##*/} --boot-directory=/mnt/${disk##*/}${efinput##*/}/efi --removable
+sudo grub-install --target=x86_64-efi --efi-directory=/mnt/${efinput##*/} --boot-directory=/mnt/${efinput##*/}/efi --removable
 
 # Generate GRUB configuration files in /efi/boot/grub.cfg
 echo "Generating GRUB configuration..."
-sudo grub-mkconfig -o /mnt/${disk##*/}${efinput##*/}/efi/boot/grub.cfg
+sudo grub-mkconfig -o /mnt/${efinput##*/}/efi/boot/grub.cfg
 
 # Check the installation status
 echo "GRUB installation completed. Checking the disk layout..."
 lsblk
-
