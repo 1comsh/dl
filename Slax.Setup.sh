@@ -28,17 +28,17 @@ echo "Creating partitions on $disk..."
 # Create a new GPT partition table
 sudo parted -s "$disk" mklabel gpt
 
-# Create the BIOS partition (3 MB) for bios_grub
-sudo parted -s "$disk" mkpart primary 1MiB 4MiB
+# Create the BIOS partition (4 MB) for bios_grub
+sudo parted -s "$disk" mkpart primary 1MiB 5MiB
 sudo parted -s "$disk" set 1 bios_grub on
 
 # Create the EFI partition (800 MB) in FAT32
-sudo parted -s "$disk" mkpart primary fat32 4MiB 804MiB
+sudo parted -s "$disk" mkpart primary fat32 5MiB 805MiB
 sudo parted -s "$disk" set 2 boot on
 sudo parted -s "$disk" set 2 esp on
 
 # Create the EXT4 partition (using remaining space for Linux)
-sudo parted -s "$disk" mkpart primary ext4 804MiB 100%
+sudo parted -s "$disk" mkpart primary ext4 805MiB 100%
 
 # Format the partitions
 echo "Formatting partitions..."
