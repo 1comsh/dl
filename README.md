@@ -1,7 +1,8 @@
 Armbian AMD64 Downloads : https://dl.armbian.com/uefi-x86/
+
 Mirror : https://mirror.twds.com.tw/armbian-dl/uefi-x86/archive/?C=S&O=D
 
-=======================================================================================
+==================================================================
 
 Flash img :
 - Find Target Drive : lsblk
@@ -15,7 +16,7 @@ Decompress XZ : xz -dk xxx.img.xz
 
 Decompress 7Zip : 7z x xxx.img.xz
 
-=======================================================================================
+==================================================================
 
 # Install Grub bootloader :
 # lsblk = /dev/sdX  >  mount = /mnt/sdX
@@ -29,7 +30,7 @@ sudo grub-install --target=i386-pc /dev/sdX --boot-directory=/mnt/sdX2/efi --rem
 
 sudo grub-install --target=x86_64-efi --efi-directory=/mnt/sdX2 --boot-directory=/mnt/sdX2/efi --removable
 
-=======================================================================================
+==================================================================
 
 #Slax64 Setting :
 
