@@ -1,4 +1,5 @@
 Armbian AMD64 Downloads : https://dl.armbian.com/uefi-x86/
+Mirror : https://mirror.twds.com.tw/armbian-dl/uefi-x86/archive/?C=S&O=D
 
 =======================================================================================
 
