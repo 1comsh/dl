@@ -118,13 +118,11 @@ p7zip-full
 pamix
 papirus-icon-theme
 pavucontrol
-pavumeter
 pcmanfm
 pkexec
 plasma-discover
 plasma-discover-backend-flatpak
 polkitd
-printer-driver-all
 profile-sync-daemon
 pulseaudio
 pulseaudio-module-bluetooth
@@ -133,7 +131,6 @@ samba
 sddm
 slick-greeter
 smbclient
-software-properties-gtk
 spice-vdagent
 sudo
 surf
