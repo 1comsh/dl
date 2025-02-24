@@ -1,4 +1,5 @@
 #!/bin/bash
+rfkill unblock all
 
 # Find wifi device
 ip a
