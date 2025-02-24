@@ -7,7 +7,7 @@ ip a
 read -p "Enter wifi device name (e.g., wlan0): " wifi_device
 
 # Unblock wifi
-rfkill unblock all
+rfkill unblock wifi
 
 # Scan for SSID
 wpa_cli scan
@@ -31,3 +31,6 @@ wpa_cli status
 
 # Run DHCP to get an IP
 dhclient "$wifi_device"
+
+#Test by ping Google
+ping -c 2 google.co.th
