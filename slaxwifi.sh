@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Find wifi device
+ip a
+
+# Prompt user for wifi device
+read -p "Enter wifi device name (e.g., wlan0): " wifi_device
+
+# Unblock wifi
+rfkill unblock all
+
+# Scan for SSID
+wpa_cli scan
+
+# Show wifi SSID
+wpa_cli scan_results
+
+# Prompt user for SSID and password
+read -p "Enter SSID: " ssid
+read -p "Enter Password: " password
+echo
+
+# Setup wifi connection
+wpa_passphrase "$ssid" "$password" | tee /etc/wpa_supplicant/wpa_supplicant.conf
+
+# Start wpa_supplicant
+wpa_supplicant -B -i "$wifi_device" -c /etc/wpa_supplicant/wpa_supplicant.conf
+
+# Check wifi status
+wpa_cli status 
+
+# Run DHCP to get an IP
+dhclient "$wifi_device"
