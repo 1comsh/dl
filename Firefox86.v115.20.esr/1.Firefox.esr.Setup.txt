@@ -1,0 +1,67 @@
+https://mozilla.github.io/policy-templates/
+
+Step-by-Step Guide to Install Firefox 115.9.1 ESR
+
+    Extract the downloaded file: Navigate to the directory where you downloaded the firefox-115.9.1esr.tar.bz2 file and extract it:
+
+tar -xjf firefox-115.esr.tar.bz2
+
+This will create a directory called firefox with the Firefox files inside.
+
+Move Firefox to /usr/lib/: To make Firefox available system-wide, move the extracted directory to /usr/lib/, which is a common location for optional software installations:
+
+sudo mv firefox /usr/lib/firefox115esr
+
+Now your Firefox 115.ESR is located in /usr/lib/firefox115esr
+
+Create a symbolic link: This makes it easy to run Firefox from the terminal without needing to specify the full path:
+
+sudo ln -s /usr/lib/firefox115esr/firefox /usr/local/bin/firefox115esr
+
+Now, you can run Firefox 115.ESR by simply typing firefox-esr in the terminal or finding it in your application menu.
+
+(Optional) Create a Desktop Shortcut: If you'd like to create a desktop shortcut for easier access, follow these steps:
+
+    Create a new .desktop file:
+
+nano ~/.local/share/applications/firefox-esr.desktop
+
+Add the following content to the file:
+
+    [Desktop Entry]
+    Name=Firefox ESR
+    Comment=Browse the World Wide Web
+    Exec=/usr/lib/firefox115esr/firefox %u
+    Icon=/usr/lib/firefox115esr/browser/chrome/icons/default/default64.png
+    Terminal=false
+    Type=Application
+    Categories=Network;WebBrowser;Office;Viewer;Graphics;2DGraphics;VectorGraphics;
+
+    Save the file and exit (Ctrl+X, then Y, then Enter).
+
+    This will create a shortcut in your application menu, and you should now be able to launch Firefox ESR by searching for it.
+
+Run Firefox ESR: Now you can simply type the following in the terminal to run Firefox ESR:
+
+    firefox115esr
+
+Updating Firefox ESR:
+
+    Since you manually installed Firefox, it won’t automatically update through your package manager. To update it, you'll need to download the newer .tar.bz2 version from Mozilla and repeat the installation steps.
+    You can also check for updates in Firefox itself under the Help > About Firefox menu, and it will prompt you if an update is available, but you’ll still need to manually download the new version if you want to update.
+
+Optional: Pin the Version in APT (To Prevent Automatic Package Updates)
+
+Since you manually installed Firefox, Debian's APT package manager might still offer to update the system’s Firefox version. To avoid this, you can pin the package to prevent upgrades:
+
+    Create a preferences file:
+
+sudo nano /etc/apt/preferences.d/firefox-esr
+
+Add the following content to pin Firefox ESR:
+
+    Package: firefox-esr
+    Pin: version 115.20.*
+    Pin-Priority: 1001
+
+This will tell APT to keep using the manually installed version and ignore any newer versions available in the repository.
