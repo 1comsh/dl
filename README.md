@@ -70,9 +70,18 @@ id -Gn "$inputuser"
 
 echo
 
-=======================================================================================
+==================================================================
 
 #Gnome-Disks Mount Options :
 
 users,noatime,nodiratime,group,nodev,exec,async,comment=x-gvfs-show,x-gvfs-show,x-udisks-auth
 user,users,noatime,nodiratime,suid,dev,exec,async,comment=x-gvfs-show,x-gvfs-show,x-udisks-auth
+
+==================================================================
+#Ubuntu remove :
+
+grub-customizer
+
+libfontembed1
+
+libpulsedsp
