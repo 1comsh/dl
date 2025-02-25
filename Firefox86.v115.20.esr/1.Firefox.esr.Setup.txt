@@ -1,6 +1,6 @@
 https://mozilla.github.io/policy-templates/
 
-Step-by-Step Guide to Install Firefox 115.9.1 ESR
+Step-by-Step Guide to Install Firefox 115.20 ESR
 
     Extract the downloaded file: Navigate to the directory where you downloaded the firefox-115.9.1esr.tar.bz2 file and extract it:
 
