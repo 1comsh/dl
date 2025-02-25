@@ -34,15 +34,31 @@ sudo grub-install --target=x86_64-efi --efi-directory=/mnt/sdX2 --boot-directory
 
 #Slax64 Setting :
 
-passwd guest
+#passwd guest
+#usermod -l user guest
+#usermod -d /home/user -m user
+#apt update && apt install sudo nala -y
+#usermod -aG sudo user
 
-usermod -l user guest
+ip a
 
-usermod -d /home/user -m user
+ping -c 2 www.google.co.th
 
-apt update && apt install sudo nala -y
+apt update -y && apt install nala ntp perl sudo -y
 
-usermod -aG sudo user
+nala --install-completion bash
+
+nala clean
+
+deluser --remove-home guest
+ls /home
+
+# Prompt for New User and Password
+read -p "Enter New User : " inputuser
+adduser "$inputuser"
+usermod -aG sudo,audio,video,dip,netdev,plugdev,power "$inputuser"
+id -Gn "$inputuser"
+echo
 
 =======================================================================================
 
