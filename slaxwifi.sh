@@ -1,7 +1,9 @@
 #!/bin/bash
-rfkill unblock all
+echo "deb https://mirror.sg.gs/debian/ bookworm main" | sudo tee -a /etc/apt/sources.list
+echo "deb https://mirror.twds.com.tw/debian/ bookworm main" | sudo tee -a /etc/apt/sources.list
 
 # Find wifi device
+rfkill unblock all
 ip a
 
 # Prompt user for wifi device
