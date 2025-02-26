@@ -34,4 +34,4 @@ wpa_cli status
 dhclient "$wifi_device"
 
 #Test by ping Google
-ping -c 2 google.co.th
+ping -c 2 1.1.1.1
