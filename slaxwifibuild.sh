@@ -39,7 +39,7 @@ wpa_cli status
 dhclient "$wifi_device"
 
 #Test by ping Google
-ping -c 2 google.co.th
+ping -c 2 1.1.1.1
 
 apt update -y && apt install nala ntp perl sudo -y
 
@@ -77,4 +77,4 @@ read -p "Enter SSID : " nmssid
 read -p "Enter Password : " wifipass
 nmcli d wifi connect "$nmssid" password "$wifipass"
 
-ping -c 2 google.co.th
+ping -c 2 1.1.1.1
