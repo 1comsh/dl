@@ -27,12 +27,12 @@ read -sp "Enter Password: " password
 echo
 
 # Setup wifi connection
-wpa_passphrase "$ssid" "$password" | sudo tee /etc/wpa_supplicant/wpa_supplicant.conf > /dev/null
-sudo chmod 600 /etc/wpa_supplicant/wpa_supplicant.conf
+wpa_passphrase "$ssid" "$password" | tee /etc/wpa_supplicant/wpa_supplicant.conf > /dev/null
+chmod 600 /etc/wpa_supplicant/wpa_supplicant.conf
 
 # Start wpa_supplicant
-sudo killall -q wpa_supplicant
-sudo wpa_supplicant -B -i "$wifi_device" -c /etc/wpa_supplicant/wpa_supplicant.conf
+killall -q wpa_supplicant
+wpa_supplicant -B -i "$wifi_device" -c /etc/wpa_supplicant/wpa_supplicant.conf
 
 # Check wifi status
 wpa_cli status
