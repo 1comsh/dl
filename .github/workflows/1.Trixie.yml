@@ -17,9 +17,9 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          apt-get update && apt-get install -y sudo
+         apt-get update && apt-get install -y sudo
           df -h
-          apt-get install -y 7zip curl git wget ca-certificates binutils debootstrap \
+          sudo apt-get install -y 7zip curl git wget ca-certificates binutils debootstrap \
             squashfs-tools xz-utils lz4 zstd xorriso mtools rsync grub-efi-amd64-bin \
             grub-pc-bin grub-common
 
@@ -28,7 +28,7 @@ jobs:
           wget -q https://github.com/1compk/minios/releases/download/live/zMinios.Skyline.Build.03.2026.tar.xz
           tar -xf zMinios.Skyline.Build.03.2026.tar.xz 
           cd zMinios.Skyline.Build.03.2026/
-          sh trixie.xfce.build.sh
+          sudo sh trixie.xfce.build.sh
 
       - name: Upload MiniOS.Trixie.iSO
         uses: actions/upload-artifact@v4
