@@ -6,23 +6,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 360
-
-    #container:
-      #image: debian:trixie
-      #options: --privileged
-
     steps:
-      - name: Checkout code (Optional)
-        uses: actions/checkout@v4
-
+      - name: Free Disk Space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo docker image prune -a -f
+      
       - name: Install Dependencies
         run: |
-         apt-get update && apt-get install -y sudo
-          df -h
-          sudo apt-get install -y 7zip curl git wget ca-certificates binutils debootstrap \
-            squashfs-tools xz-utils lz4 zstd xorriso mtools rsync grub-efi-amd64-bin \
-            grub-pc-bin grub-common
-
+         sudo apt-get update
+         sudo apt-get install -y 7zip curl git wget ca-certificates binutils debootstrap \
+           squashfs-tools xz-utils lz4 zstd xorriso mtools rsync grub-efi-amd64-bin \
+           grub-pc-bin grub-common
+           
       - name: Download, Decompress and Build
         run: |
           wget -q https://github.com/1compk/minios/releases/download/live/zMinios.Skyline.Build.03.2026.tar.xz
