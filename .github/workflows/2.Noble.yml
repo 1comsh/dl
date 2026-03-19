@@ -1,0 +1,47 @@
+name: 1.Build MiniOS Noble
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    container:
+      image: debian:trixie
+      options: --privileged
+
+    steps:
+      - name: Checkout code (Optional)
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          apt-get update && apt-get install -y sudo
+          df -h
+          apt-get install -y 7zip curl git wget ca-certificates binutils debootstrap \
+            squashfs-tools xz-utils lz4 zstd xorriso mtools rsync grub-efi-amd64-bin \
+            grub-pc-bin grub-common
+
+      - name: Download, Decompress and Build
+        run: |
+          wget -q https://github.com/1compk/minios/releases/download/live/zMinios.Skyline.Build.03.2026.tar.xz
+          tar -xf zMinios.Skyline.Build.03.2026.tar.xz 
+          cd zMinios.Skyline.Build.03.2026/
+          sh noble.xfce.build.sh
+
+      - name: Upload MiniOS.Noble.iSO
+        uses: actions/upload-artifact@v4
+        with:
+          name: MiniOS.Noble.ISO
+          path: zMinios.Skyline.Build.03.2026/build/iso/*.iso*
+          if-no-files-found: error
+          retention-days: 15
+          
+      - name: Upload MiniOS.Noble.SB
+        uses: actions/upload-artifact@v4
+        with:
+          name: MiniOS.Noble.SB
+          path: zMinios.Skyline.Build.03.2026/build/noble-standard-amd64/image/minios/*.sb*
+          if-no-files-found: error
+          retention-days: 15
