@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 360
 
-    container:
-      image: debian:trixie
-      options: --privileged
+    #container:
+      #image: debian:trixie
+      #options: --privileged
 
     steps:
       - name: Checkout code (Optional)
