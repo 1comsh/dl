@@ -1,4 +1,4 @@
-name: 1.Build MiniOS Trixie
+name: 1.Build MiniOS LXFce Trixie
 on:
   workflow_dispatch:
 
@@ -12,24 +12,30 @@ jobs:
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
           sudo docker image prune -a -f
       
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
       - name: Install Dependencies
         run: |
-         sudo apt-get update
-         sudo apt-get install -y 7zip curl git wget ca-certificates binutils debootstrap \
-           squashfs-tools xz-utils lz4 zstd xorriso mtools rsync grub-efi-amd64-bin \
-           grub-pc-bin grub-common
-           
+          sudo apt-get update
+          sudo apt-get install -y 7zip curl git wget ca-certificates binutils debootstrap \
+            squashfs-tools xz-utils lz4 zstd xorriso mtools rsync grub-efi-amd64-bin \
+            grub-pc-bin grub-common qemu-user-static binfmt-support \
+            gcc-aarch64-linux-gnu g++-aarch64-linux-gnu build-essential
+
       - name: Download, Decompress and Build
         run: |
           wget -q https://github.com/1compk/minios/releases/download/live/zMinios.Skyline.Build.03.2026.tar.xz
           tar -xf zMinios.Skyline.Build.03.2026.tar.xz 
           cd zMinios.Skyline.Build.03.2026/
-          sudo sh trixie.xfce.build.sh
+          sh trixie.xfce.build.sh
 
       - name: Upload MiniOS.Trixie.iSO
         uses: actions/upload-artifact@v4
         with:
-          name: MiniOS.Trixie.ISO
+          name: MiniOS.Trixie.iSO
           path: zMinios.Skyline.Build.03.2026/build/iso/*.iso*
           if-no-files-found: error
           retention-days: 15
@@ -37,7 +43,7 @@ jobs:
       - name: Upload MiniOS.Trixie.SB
         uses: actions/upload-artifact@v4
         with:
-          name: MiniOS.Trixie.SB
+          name: MiniOS.Noble.SB
           path: zMinios.Skyline.Build.03.2026/build/trixie-standard-amd64/image/minios/*.sb*
           if-no-files-found: error
           retention-days: 15
