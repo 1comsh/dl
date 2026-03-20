@@ -1,4 +1,4 @@
-name: 1.Build Armbian LXFce Trixie Uefi-x86
+name: 2.Build MiniOS LXFce Noble
 on:
   workflow_dispatch:
 
