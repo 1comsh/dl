@@ -21,8 +21,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y 7zip curl git wget ca-certificates binutils debootstrap \
-            squashfs-tools xz-utils lz4 zstd xorriso mtools rsync grub-efi-amd64-bin \
-            grub-pc-bin grub-common qemu-user-static binfmt-support \
+            squashfs-tools xz-utils lz4 zstd xorriso mtools rsync \
+            qemu-user-static binfmt-support \
             gcc-aarch64-linux-gnu g++-aarch64-linux-gnu build-essential
 
       - name: Download, Decompress and Build
