@@ -1,0 +1,51 @@
+name: 1.Build Armbian Mini Trixie Arm64
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Free Disk Space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo docker image prune -a -f
+      
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install Dependencies
+        run: |
+         sudo apt-get update
+         sudo apt-get install -y 7zip curl git wget ca-certificates binutils debootstrap \
+           squashfs-tools xz-utils lz4 zstd xorriso mtools rsync grub-efi-amd64-bin \
+           grub-pc-bin grub-common
+
+      - name: Install Dependencies Arm64
+        run: |
+         sudo apt-get update
+         sudo apt-get install -y \
+           qemu-user-static \
+           binfmt-support \
+           gcc-aarch64-linux-gnu \
+           g++-aarch64-linux-gnu \
+           build-essential
+           
+      - name: Download, Decompress and Build
+        run: |
+          ./compile.sh build BOARD=aml-s9xx-box BRANCH=edge RELEASE=trixie \
+           BUILD_DESKTOP=no BUILD_MINIMAL=yes \
+           DESKTOP_APPGROUPS_SELECTED= DESKTOP_ENVIRONMENT= \
+           DESKTOP_ENVIRONMENT_CONFIG_NAME= EXPERT=yes \
+           KERNEL_BTF=no KERNEL_CONFIGURE=no KERNEL_GIT=shallow 
+
+      - name: Upload Armbian.Mini.Trixie.iMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: Armbian.Mini.Trixie.IMG
+          path: output/images/*.img*
+          if-no-files-found: error
+          retention-days: 15
